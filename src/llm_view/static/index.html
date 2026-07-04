@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LLM View</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="brand">
+          <h1>LLM View</h1>
+          <p>transformer internals, live</p>
+        </div>
+        <div id="status-pill" class="status-pill" data-kind="info" role="status">Ready.</div>
+        <div id="hardware-chips" class="hardware-chips" aria-label="Hardware"></div>
+      </header>
+
+      <section class="control-bar" aria-label="Model and prompt controls">
+        <div class="control-group">
+          <label for="model-select">Model</label>
+          <div class="control-row">
+            <select id="model-select"></select>
+            <button id="refresh-models-button" class="btn ghost" type="button" title="Rescan the models/ folder">⟳</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label>Mode</label>
+          <div class="segmented" role="group" aria-label="Run mode">
+            <button id="demo-mode" class="active" type="button">Demo</button>
+            <button id="real-mode" type="button">Real</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="hf-input">Any Hugging Face id</label>
+          <div class="control-row">
+            <input id="hf-input" type="text" placeholder="e.g. Qwen/Qwen3-0.6B" />
+            <button id="hf-load-button" class="btn ghost" type="button">Load</button>
+          </div>
+        </div>
+        <div class="control-group grow">
+          <label for="prompt-input">Prompt <span class="hint">Ctrl+Enter runs</span></label>
+          <div class="control-row">
+            <textarea id="prompt-input" rows="1">A transformer model turns tokens into predictions by moving information through attention heads.</textarea>
+            <button id="run-button" class="btn primary" type="button">Run</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="main">
+        <aside class="rail" aria-label="Model map">
+          <div class="rail-head">
+            <h2>Model Map</h2>
+            <span id="model-summary"></span>
+          </div>
+          <div id="model-map" class="model-map"></div>
+        </aside>
+
+        <section class="content">
+          <nav class="tabs" role="tablist" aria-label="Views">
+            <button data-tab="architecture" class="active" role="tab" type="button">3D Architecture</button>
+            <button data-tab="flow" role="tab" type="button">Input Flow</button>
+            <button data-tab="attention" role="tab" type="button">Attention</button>
+            <button data-tab="output" role="tab" type="button">Output</button>
+          </nav>
+
+          <section id="tab-architecture" class="tab-panel" role="tabpanel">
+            <p class="tab-hint">drag ⇄ rotate · drag ⇅ height · wheel zoom · Alt = fine steps · sliders below the view · double-click reset · click parts to inspect</p>
+            <div class="spatial-layout">
+              <div id="spatial-viewport" class="spatial-viewport" tabindex="0" aria-label="3D model architecture view"></div>
+              <aside id="spatial-details" class="spatial-details" aria-label="3D selection details"></aside>
+            </div>
+          </section>
+
+          <section id="tab-flow" class="tab-panel" role="tabpanel" hidden>
+            <p class="tab-hint">top → bottom · every matrix × weights with exact result sizes</p>
+            <div id="flow-panel" class="flow-panel-body"></div>
+          </section>
+
+          <section id="tab-attention" class="tab-panel" role="tabpanel" hidden>
+            <p class="tab-hint"><span id="selected-layer-label"></span> · heads, heatmap, metrics, and activations from the last run</p>
+            <div id="layer-inspector"></div>
+          </section>
+
+          <section id="tab-output" class="tab-panel" role="tabpanel" hidden>
+            <div class="output-grid">
+              <div class="card">
+                <h2>Next Token <span class="hint">top logits</span></h2>
+                <div id="predictions"></div>
+              </div>
+              <div class="card">
+                <h2>Token Journey <span class="hint">salience by layer</span></h2>
+                <div id="token-journey"></div>
+              </div>
+            </div>
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <script type="module" src="/static/js/app.js"></script>
+  </body>
+</html>
