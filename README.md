@@ -31,7 +31,7 @@ The project is designed to make complex LLM architectures easier to understand, 
 Clone the repository:
 
 ```powershell
-git clone <your-repo-url>
+git clone https://github.com/mugilnimbus/LLM_View_3D.git
 cd LLM_View_3D
 ```
 
