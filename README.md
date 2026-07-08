@@ -13,6 +13,7 @@ The project is designed to make complex LLM architectures easier to understand, 
 * Inspect model architecture and individual layers
 * View matrix sizes, tensor flow, attention blocks, MLP blocks, and residual paths
 * Load local Hugging Face model clones from the `models/` folder
+* Read architecture metadata from local GGUF models without loading weights
 * Explore models directly in the browser
 * Built for AI education, research, and model analysis
 
@@ -117,6 +118,13 @@ Then:
 4. Press **Run** to execute a prompt if model weights and ML dependencies are available.
 
 The `models/` folder is ignored by Git so local model files and weights are not pushed to GitHub.
+
+### Use a local GGUF model
+
+Put a `.gguf` file inside its own folder under `models/`, then click **Refresh** in the app.
+LLM View reads the GGUF header metadata to visualize architecture, layer counts, head counts, hidden
+size, MLP size, and vocabulary size. GGUF execution is not wired up yet, so prompt runs for those
+entries use demo tensors.
 
 ## 3D Controls
 
